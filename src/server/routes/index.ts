@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { RestaurantesController } from "../controllers/restaurantes";
 
 const router = Router()
 
@@ -7,7 +8,7 @@ router.get('/', (_, res) => {
 })
 
 //adicionar middleware e controllers
-router.post('/restaurantes')
+router.post('/restaurantes', RestaurantesController.create)
 router.get('/restaurantes')
 router.get('/restaurantes/:id')
 router.put('/restaurantes/:id')
