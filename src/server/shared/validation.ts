@@ -5,4 +5,4 @@ export const validation = async (schema, data) => {
     } catch (error) {
       return error.errors;
     }
-};
+}

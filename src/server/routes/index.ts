@@ -9,10 +9,10 @@ router.get('/', (_, res) => {
 
 //adicionar middleware e controllers
 router.post('/restaurantes', RestaurantesController.create)
-router.get('/restaurantes')
-router.get('/restaurantes/:id')
+router.get('/restaurantes', RestaurantesController.getAll)
+router.get('/restaurantes/:id', RestaurantesController.getById)
 router.put('/restaurantes/:id')
-router.delete('/restaurantes/:id')
+router.delete('/restaurantes/:id', RestaurantesController.deleteById)
 
 router.post('/produtos')
 router.get('/produtos')
