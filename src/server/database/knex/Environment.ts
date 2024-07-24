@@ -1,5 +1,6 @@
 import { Knex } from 'knex'
 import path from 'path'
+import { Database } from 'sqlite3'
 
 export const development: Knex.Config = {
     client: 'sqlite3',
@@ -14,9 +15,10 @@ export const development: Knex.Config = {
         directory: path.resolve(__dirname, '..', 'seeds')
     },
     pool: {
-        afterCreate: (connection: any, done: Function) => {
-            connection.run('PRAGMA foreign_keys = ON')
-            done()
+        afterCreate: (connection: Database, done: (err?: Error) => void) => {
+            connection.run('PRAGMA foreign_keys = ON', (err: Error | null) => {
+                done(err || undefined);
+            });
         }
     }
 }
