@@ -1,7 +1,5 @@
-//função up e down para criar e excluir a tabela do banco
 import { Knex } from 'knex'
 import { ETableNames } from '../ETableNames'
-//knex.schema.createtable
 
 export async function up(knex: Knex) {
     return knex
@@ -12,6 +10,8 @@ export async function up(knex: Knex) {
             table.string('categoria', 100).index().notNullable()
             table.integer('avaliacao').index().notNullable()
             table.string('sobre', 300).index().notNullable()
+            table.string('url', 300).index().notNullable()
+            table.comment('Tabela usada para armazenar restaurantes no sistema')
         })
         .then(() => {
             console.log(`# Create table ${ETableNames.restaurante}`)
@@ -26,4 +26,3 @@ export async function down(knex: Knex) {
             console.log(`# Dropped table ${ETableNames.restaurante}`)
         })
 }
-
