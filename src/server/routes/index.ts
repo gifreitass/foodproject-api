@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { RestaurantesController } from "../controllers/restaurantes";
+import { ProdutosController } from "../controllers/produtos";
 
 const router = Router()
 
@@ -11,13 +12,13 @@ router.get('/', (_, res) => {
 router.post('/restaurantes', RestaurantesController.create)
 router.get('/restaurantes', RestaurantesController.getAll)
 router.get('/restaurantes/:id', RestaurantesController.getById)
-router.put('/restaurantes/:id')
+router.put('/restaurantes/:id', RestaurantesController.updateById)
 router.delete('/restaurantes/:id', RestaurantesController.deleteById)
 
-router.post('/produtos')
-router.get('/produtos')
-router.get('/produtos/:id')
+router.post('/produtos', ProdutosController.create)
+router.get('/produtos', ProdutosController.getAll)
+router.get('/produtos/:id', ProdutosController.getById)
 router.put('/produtos/:id')
-router.delete('/produtos/:id')
+router.delete('/produtos/:id', ProdutosController.deleteById)
 
 export { router }

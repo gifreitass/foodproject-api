@@ -14,6 +14,14 @@ const getByIdSchema = yup.object().shape({
 export const getById = async (req: Request<IParamProps>, res: Response) => {
     const { params } = req;
 
+    if (!params) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+            errors: {
+                default: 'O parâmetro "id" precisa ser informado'
+            }
+        });
+    }
+
     const validationErrors = await validation(getByIdSchema, params);
 
     if (validationErrors) {
