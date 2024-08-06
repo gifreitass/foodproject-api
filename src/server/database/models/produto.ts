@@ -1,4 +1,6 @@
 export interface IProduto {
+    id: number,
+    restaurantId: number,
     nome: string,
     valor: number,
     promocao: boolean,

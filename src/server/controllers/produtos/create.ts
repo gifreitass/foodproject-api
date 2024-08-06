@@ -3,6 +3,7 @@ import * as yup from 'yup'
 import { IProduto } from '../../database/models/produto';
 import { validation } from '../../shared/validation';
 import { StatusCodes } from "http-status-codes";
+import { ProdutosProvider } from '../../database/providers/produtos';
 
 const createSchema = yup.object().shape({
     url: yup.string().required(),
@@ -11,6 +12,7 @@ const createSchema = yup.object().shape({
     valor: yup.number().required(),
     valorPromocional: yup.number().required(),
     descricao: yup.string().required(),
+    restauranteId: yup.number().required().min(1)
 });
 
 export const create: RequestHandler = async (req: Request<{}, {}, IProduto>, res: Response) => {
@@ -20,6 +22,16 @@ export const create: RequestHandler = async (req: Request<{}, {}, IProduto>, res
 
     if (validationErrors) {
         return res.status(StatusCodes.BAD_REQUEST).json({ errors: validationErrors })
+    }
+
+    const result = await ProdutosProvider.create(body)
+
+    if (result instanceof Error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message
+            }
+        });
     }
 
     return res.status(StatusCodes.CREATED).json({ message: "Produto criado" })

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import * as yup from 'yup'
 import { validation } from '../../shared/validation';
+import { RestaurantesProvider } from '../../database/providers/restaurantes';
 
 interface IQueryProps {
     id?: number,
@@ -26,8 +27,15 @@ export const getAll = async (req: Request<{}, {}, {}, IQueryProps>, res: Respons
         return res.status(StatusCodes.BAD_REQUEST).json({ errors: validationErrors });
     }
 
-    // res.setHeader('acess-control-expose-headers', 'x-total-count')
-    // res.setHeader('x-total-count', count)
+    const result = await RestaurantesProvider.getAll()
 
-    return res.status(StatusCodes.OK).json()
+    if (result instanceof Error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message
+            }
+        });
+    }
+
+    return res.status(StatusCodes.OK).json(result)
 }

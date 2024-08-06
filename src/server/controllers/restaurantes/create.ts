@@ -3,6 +3,7 @@ import { IRestaurante } from "../../database/models/restaurante";
 import { validation } from "../../shared/validation";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
+import { RestaurantesProvider } from "../../database/providers/restaurantes";
 
 const createSchema = yup.object().shape({
     url: yup.string().required(),
@@ -12,7 +13,6 @@ const createSchema = yup.object().shape({
     sobre: yup.string().required(),
 });
 
-//pendente: provider e tratamento de erro
 export const create: RequestHandler = async (req: Request<{}, {}, IRestaurante>, res: Response) => {
     const { body } = req;
 
@@ -22,5 +22,15 @@ export const create: RequestHandler = async (req: Request<{}, {}, IRestaurante>,
         return res.status(StatusCodes.BAD_REQUEST).json({ errors: validationErrors });
     }
 
-    return res.status(StatusCodes.CREATED).json({ message: 'Restaurante criado' });
+    const result = await RestaurantesProvider.create(body)
+
+    if (result instanceof Error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message
+            }
+        });
+    }
+
+    return res.status(StatusCodes.CREATED).json(result);
 }

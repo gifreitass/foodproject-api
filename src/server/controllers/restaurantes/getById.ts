@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validation } from "../../shared/validation";
 import { StatusCodes } from "http-status-codes";
 import * as yup from 'yup'
+import { RestaurantesProvider } from "../../database/providers/restaurantes";
 
 interface IParamProps {
     id?: number
@@ -14,7 +15,7 @@ const getByIdSchema = yup.object().shape({
 export const getById = async (req: Request<IParamProps>, res: Response) => {
     const { params } = req;
 
-    if (!params) {
+    if (!params.id) {
         return res.status(StatusCodes.BAD_REQUEST).json({
             errors: {
                 default: 'O parâmetro "id" precisa ser informado'
@@ -28,5 +29,15 @@ export const getById = async (req: Request<IParamProps>, res: Response) => {
         return res.status(StatusCodes.BAD_REQUEST).json({ errors: validationErrors });
     }
 
-    return res.status(StatusCodes.OK).json()
+    const result = await RestaurantesProvider.getById(params.id)
+
+    if (result instanceof Error) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            errors: {
+                default: result.message
+            }
+        });
+    }
+
+    return res.status(StatusCodes.OK).json(result)
 }

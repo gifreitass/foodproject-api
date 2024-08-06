@@ -18,7 +18,7 @@ router.delete('/restaurantes/:id', RestaurantesController.deleteById)
 router.post('/produtos', ProdutosController.create)
 router.get('/produtos', ProdutosController.getAll)
 router.get('/produtos/:id', ProdutosController.getById)
-router.put('/produtos/:id')
+router.put('/produtos/:id', ProdutosController.updateById)
 router.delete('/produtos/:id', ProdutosController.deleteById)
 
 export { router }
