@@ -29,6 +29,20 @@ export const test: Knex.Config = {
 }
 
 export const production: Knex.Config = {
-    //alterar depois para produção
-   ...development 
+    client: 'pg',
+    useNullAsDefault: true,
+    migrations: {
+        directory: path.resolve(__dirname, '..', 'migrations')
+    },
+    seeds: {
+        directory: path.resolve(__dirname, '..', 'seeds')
+    },
+    connection: {
+        host: process.env.DATABASE_HOST,
+        user: process.env.DATABASE_USER,
+        database: process.env.DATABASE_NAME,
+        password: process.env.DATABASE_PASSWORD,
+        port: Number(process.env.DATABASE_PORT || 3000),
+        ssl: { rejectUnauthorized: false }
+    },
 }
