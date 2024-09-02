@@ -10,7 +10,7 @@
     "knex:rollback": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback",
     "knex:rollback-all": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:rollback --all",
     "knex:seed": "knex --knexfile ./src/server/database/knex/Environment.ts seed:run",
-    "vercel-build": "knex --knexfile ./src/server/database/knex/Environment.ts migrate:latest"
+    "vercel-build": "npm run knex --knexfile ./src/server/database/knex/Environment.ts migrate:latest"
   },
   "author": "Giovanna",
   "license": "ISC",
