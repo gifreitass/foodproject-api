@@ -11,6 +11,7 @@ export const getAll = async () => {
 
         return new Error('Erro ao cadastrar registro')
     } catch (error) {
+        
         return new Error('Erro ao cadastrar registro')
     }
 } 
