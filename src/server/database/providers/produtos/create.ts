@@ -5,7 +5,7 @@ import { IProduto } from "../../models/produto";
 export const create = async (produto: Omit<IProduto, 'id'>) => {
     try {
         const [result] = await Knex(ETableNames.produto).insert(produto).returning('id')
-
+        
         if (result.id) {
             return result.id
         } 
