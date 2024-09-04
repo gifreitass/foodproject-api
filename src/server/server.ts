@@ -12,4 +12,4 @@ server.get('/', (_, res) => {
     return res.send('Olá')
 })
 
-export { server }
+export default server
