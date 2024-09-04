@@ -12,7 +12,6 @@ export const updateById = async (restaurante: Omit<IRestaurante, "id">, id: numb
 
         return new Error('Erro ao cadastrar registro')
     } catch (error) {
-        console.log(error)
         return new Error('Erro ao cadastrar registro')
     }
 }
